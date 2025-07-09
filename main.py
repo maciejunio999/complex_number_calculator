@@ -42,6 +42,8 @@ def get_number(which):
                         y = y.replace(IMAGINARY[0], '').replace(IMAGINARY[1], '')
                         if 0 == len(y):
                             y = 1
+                        if 0 == len(x):
+                            x = 0
                         try:
                             final_complex_number = complex(int(x), -int(y))
                             return final_complex_number
@@ -84,10 +86,11 @@ def get_number(which):
                             pass
                     else:
                         print('Something went wrong!')
-
         else:
             if IMAGINARY[0] in complex_number or IMAGINARY[1] in complex_number:
                 complex_number = complex_number.replace(IMAGINARY[0], '').replace(IMAGINARY[1], '')
+                if 0 == len(complex_number):
+                    complex_number = 1
                 try:
                     final_complex_number = complex(0,int(complex_number))
                     return final_complex_number
@@ -137,9 +140,17 @@ def plot(array_data):
     data = np.array(array_data)
     x = data.real
     y = data.imag
-    plt.plot(x, y, 'g*')
-    plt.ylabel('Imaginary')
+    plt.plot(x, y, 'bo')
+    for i in range(len(x) - 1):
+        dx = x[i+1] - x[i]
+        dy = y[i+1] - y[i]
+        plt.arrow(x[i], y[i], dx, dy, 
+                  head_width=0.05, head_length=0.1, 
+                  length_includes_head=True, color='blue')
     plt.xlabel('Real')
+    plt.ylabel('Imaginary')
+    plt.axis('equal')
+    plt.grid(True)
     plt.show()
 
 if __name__ == '__main__':
