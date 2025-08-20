@@ -1,6 +1,6 @@
 import matplotlib.pyplot as plt
 import numpy as np
-
+from numpy.typing import NDArray
 
 IMAGINARY = ('i', 'j')
 OPERATIONS = ('+', '-', '*', ':')
@@ -135,23 +135,21 @@ def calculate(first_complex_number, operation, second_complex_number):
             return division_of_given_numbers
 
 
+def plot(array_data: list[complex] | NDArray[np.complexfloating]):
+    data: NDArray[np.complexfloating] = np.asarray(array_data, dtype=np.complex128)
 
-def plot(array_data):
-    data = np.array(array_data)
     x = data.real
     y = data.imag
     plt.plot(x, y, 'bo')
     for i in range(len(x) - 1):
         dx = x[i+1] - x[i]
         dy = y[i+1] - y[i]
-        plt.arrow(x[i], y[i], dx, dy, 
-                  head_width=0.05, head_length=0.1, 
+        plt.arrow(x[i], y[i], dx, dy,
+                  head_width=0.05, head_length=0.1,
                   length_includes_head=True, color='blue')
-    plt.xlabel('Real')
-    plt.ylabel('Imaginary')
-    plt.axis('equal')
-    plt.grid(True)
-    plt.show()
+    plt.xlabel('Real'); plt.ylabel('Imaginary')
+    plt.axis('equal'); plt.grid(True); plt.show()
+
 
 if __name__ == '__main__':
     first_number = get_number('first')
